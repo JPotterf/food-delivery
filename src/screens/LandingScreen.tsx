@@ -38,7 +38,8 @@ export const LandingScreen = () => {
                     if(currentAddress.length > 0){
                         setTimeout(() => (
                             navigate('homeStack')
-                        ),1000)
+                        //delay lets user see their address
+                        ),1500)
                     }
                     return;
                 }    
