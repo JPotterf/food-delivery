@@ -2,9 +2,13 @@ import React,{useState, useReducer, useEffect} from 'react'
 import { View, Text, StyleSheet, Dimensions , Image } from 'react-native'
 import * as Location from 'expo-location'
 
+import {useNavigation} from '../utils'
+
 const screenWidth = Dimensions.get('screen').width;
 
 export const LandingScreen = () => {
+
+    const {navigate} = useNavigation();
     
     const [errorMsg, setErrorMsg] = useState("");
     const [address, setAddress] = useState<Location.Address>();
@@ -27,13 +31,22 @@ export const LandingScreen = () => {
 
                 for(let item of addressResponse){
                     setAddress(item)
-                    let currentAddress = `$(item.name), $(item.street), $(item.postalCode), $(item.country)`
+                    let currentAddress = `${item.name},${item.street}, ${item.postalCode}, ${item.country}`
                     setDisplayAddress(currentAddress);
-                }
+                    console.log(currentAddress);
+
+                    if(currentAddress.length > 0){
+                        setTimeout(() => (
+                            navigate('homeStack')
+                        ),1000)
+                    }
+                    return;
+                }    
+            
             }else{
                 //notify user of error
             }
-        })
+        })();
 
     },[])
 
